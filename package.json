@@ -3,7 +3,8 @@
     "curtainjs": "^1.0.2",
     "curtainsjs": "^7.1.0",
     "gsap": "^3.5.1",
-    "jquery": "^3.5.1"
+    "jquery": "^3.5.1",
+    "parcel-bundler": "^1.12.5"
   },
   "scripts": {
     "start": "parcel index.html",
