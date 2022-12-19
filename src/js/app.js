@@ -1,7 +1,11 @@
 import { Curtains, Plane } from "curtainsjs";
 import fragment from "../shaders_circle/fragment.glsl";
 import vertex from "../shaders_circle/vertex.glsl";
-import gsap from "gsap";
+import { gsap } from "gsap";
+import { Observer } from "gsap/Observer";
+
+gsap.registerPlugin(Observer);
+
 
 let activeTexture = 0;
 let currentTexture = 0;
@@ -84,30 +88,29 @@ window.addEventListener("load", () => {
       //   });
       // });
 
-      navElements.forEach(nav=>{
-        nav.addEventListener('click',(event)=>{
+      navElements.forEach(nav => {
+        nav.addEventListener('click', (event) => {
           let to = event.target.getAttribute('data-nav');
-          if(isRunning || to==currentTexture) return;
+          if (isRunning || to == currentTexture) return;
           var elems = document.querySelectorAll(".frame__switch-item");
-          [].forEach.call(elems, function(el) {
-              el.classList.remove("frame__switch-item--current");
+          [].forEach.call(elems, function (el) {
+            el.classList.remove("frame__switch-item--current");
           });
           event.target.classList.add('frame__switch-item--current')
           isRunning = true
-          
-          multiTexturesPlane.uniforms.to.value = to;
 
-          let fake = {progress:0}
+          multiTexturesPlane.uniforms.to.value = to;
+          let fake = { progress: 0 }
           gsap.to(fake, {
             duration: duration,
-            progress:  1,
-            easing: 'power2.in',
+            progress: 1,
+            ease: 'power2.in',
             onStart: () => {
               multiTexturesPlane.videos[to].play();
               currentTexture = to;
             },
-            onUpdate:()=>{
-              if(fake.progress===1){
+            onUpdate: () => {
+              if (fake.progress === 1) {
                 multiTexturesPlane.uniforms.from.value = to;
               }
               multiTexturesPlane.uniforms.transitionTimer.value = fake.progress
@@ -128,16 +131,59 @@ window.addEventListener("load", () => {
       })
 
 
+      Observer.create({
+        type: "wheel,touch,pointer",
+        wheelSpeed: -1,
+        onDown: () => changeTex(),
+        onUp: () => changeTex(),
+        tolerance: 10,
+        preventDefault: true
+      });
+
+
+      function changeTex() {
+        isRunning = true
+        let to = currentTexture ? 0 : 1
+        multiTexturesPlane.uniforms.to.value = to;
+        let fake = { progress: 0 }
+        gsap.to(fake, {
+          duration: duration,
+          progress: 1,
+          ease: 'power2.in',
+          onStart: () => {
+            multiTexturesPlane.videos[to].play();
+            currentTexture = to;
+          },
+          onUpdate: () => {
+            if (fake.progress === 1) {
+              multiTexturesPlane.uniforms.from.value = to;
+            }
+            multiTexturesPlane.uniforms.transitionTimer.value = fake.progress
+          },
+          onComplete: () => {
+            multiTexturesPlane.uniforms.from.value = to;
+            multiTexturesPlane.videos[
+              (currentTexture + length - 1) % length
+            ].pause();
+            multiTexturesPlane.videos[
+              (currentTexture + length + 1) % length
+            ].pause();
+            isRunning = false;
+          },
+        });
+
+
+      }
 
       // click to play the videos
       document.getElementById("intro").addEventListener(
         "click",
         () => {
           // fade out animation
-          gsap.to('#intro',{duration:0.1,autoAlpha:0.})
-            document.body.classList.add("video-started");
+          gsap.to('#intro', { duration: 0.1, autoAlpha: 0. })
+          document.body.classList.add("video-started");
 
-          gsap.to(multiTexturesPlane.uniforms.fadeIn,{
+          gsap.to(multiTexturesPlane.uniforms.fadeIn, {
             duration: 1,
             value: 1
           })

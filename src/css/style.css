@@ -253,7 +253,7 @@ a:focus {
 
 .frame__content-text,
 .frame__switch {
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.3s;
     display: flex;
     gap: 50px;
