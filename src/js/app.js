@@ -134,8 +134,6 @@ window.addEventListener("load", () => {
       Observer.create({
         type: "touch,pointer",
         wheelSpeed: -1,
-        onDown: () => changeTex(),
-        onUp: () => changeTex(),
         onRight: () => changeTex(),
         onLeft: () => changeTex(),
         tolerance: 50,
@@ -147,8 +145,6 @@ window.addEventListener("load", () => {
         wheelSpeed: -1,
         onDown: () => changeTex(),
         onUp: () => changeTex(),
-        onRight: () => changeTex(),
-        onLeft: () => changeTex(),
         tolerance: 10,
         preventDefault: true
       });
