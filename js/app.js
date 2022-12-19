@@ -127,6 +127,8 @@ window.addEventListener("load", () => {
         })
       })
 
+
+
       // click to play the videos
       document.getElementById("intro").addEventListener(
         "click",
