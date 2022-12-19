@@ -5,6 +5,10 @@
     "gsap": "^3.5.1",
     "jquery": "^3.5.1"
   },
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
   "devDependencies": {
     "@parcel/transformer-glsl": "^2.8.2",
     "cssnano": "^4.1.10",
