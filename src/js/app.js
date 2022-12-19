@@ -132,10 +132,23 @@ window.addEventListener("load", () => {
 
 
       Observer.create({
-        type: "wheel,touch,pointer",
+        type: "touch,pointer",
         wheelSpeed: -1,
         onDown: () => changeTex(),
         onUp: () => changeTex(),
+        onRight: () => changeTex(),
+        onLeft: () => changeTex(),
+        tolerance: 50,
+        preventDefault: true
+      });
+
+      Observer.create({
+        type: "wheel",
+        wheelSpeed: -1,
+        onDown: () => changeTex(),
+        onUp: () => changeTex(),
+        onRight: () => changeTex(),
+        onLeft: () => changeTex(),
         tolerance: 10,
         preventDefault: true
       });
@@ -143,7 +156,8 @@ window.addEventListener("load", () => {
 
       function changeTex() {
         isRunning = true
-        let to = currentTexture ? 0 : 1
+        let to = (currentTexture + 1) % 2 
+        console.log('myto', to);
         multiTexturesPlane.uniforms.to.value = to;
         let fake = { progress: 0 }
         gsap.to(fake, {
@@ -194,7 +208,7 @@ window.addEventListener("load", () => {
           // wait a tick and pause the rest of videos (the ones that are hidden)
           curtains.nextRender(() => {
             multiTexturesPlane.videos[1].pause();
-            multiTexturesPlane.videos[2].pause();
+            // multiTexturesPlane.videos[2].pause();
           });
         },
         false
