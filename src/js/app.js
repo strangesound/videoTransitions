@@ -15,7 +15,6 @@ let isRunning = 0;
 let to;
 
 let head = document.querySelector('.frame__title') 
-console.log(head);
 // Calculate screen size
 const appHeight = () => {
   const doc = document.documentElement
@@ -173,7 +172,6 @@ window.addEventListener("load", () => {
 
         isRunning = true
 
-        // console.log('myto', to, number);
         multiTexturesPlane.uniforms.to.value = to;
         let fake = { progress: 0 }
         gsap.to(fake, {
@@ -213,8 +211,6 @@ window.addEventListener("load", () => {
         
         let elems = [...document.querySelectorAll(".frame__switch-item")];
         elems.forEach(el => {
-          console.log(el.getAttribute('data-nav') === to);
-          console.log('to', to);
           if (el.getAttribute('data-nav') == to){
             el.classList.add("frame__switch-item--current");
           }
