@@ -13,6 +13,14 @@ let transitionTimer = 0;
 let timer = 0;
 let isRunning = 0;
 
+const appHeight = () => {
+  const doc = document.documentElement
+  doc.style.setProperty('--app-height', `${window.innerHeight}px`)
+ }
+ window.addEventListener('resize', appHeight)
+ appHeight()
+
+
 window.addEventListener("load", () => {
   // set up our WebGL context and append the canvas to our wrapper
   const curtains = new Curtains({
@@ -184,6 +192,8 @@ window.addEventListener("load", () => {
 
 
       }
+
+
 
       // click to play the videos
       document.getElementById("intro").addEventListener(

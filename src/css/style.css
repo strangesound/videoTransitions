@@ -35,6 +35,8 @@
     --blue-color: #A1DEF1;
     --dark-color: #000615;
     --light-color: #fff;
+    --app-height: 100%;
+
 }
 
 
@@ -54,23 +56,14 @@ body {
     overflow: hidden;
     background-image: linear-gradient(rgba(120, 120, 120, 0.2), rgba(120, 120, 120, 0.2));
     background-size: cover;
+    height: 100vh;
+    height: var(--app-height);
 }
 
 .demo-2 {
     background-image: linear-gradient(rgba(120, 120, 120, 0.2), rgba(120, 120, 120, 0.2));
 }
 
-.demo-3 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../img/bg3.jpg);
-}
-
-.demo-4 {
-    background-image: linear-gradient(rgba(120, 120, 120, 0.2), rgba(120, 120, 120, 0.2)), url(../img/bg7.jpg);
-}
-
-.demo-5 {
-    background-image: linear-gradient(rgba(120, 120, 120, 0.2), rgba(120, 120, 120, 0.2)), url(../img/bg5.jpg);
-}
 
 /* Page Loader */
 .js .loading::before,
@@ -84,7 +77,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: var(--app-height);
     background: var(--color-bg);
 }
 
@@ -131,7 +124,7 @@ a:focus {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: var(--app-height);
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -289,14 +282,14 @@ a:focus {
 
 .wrapper {
     width: 100%;
-    height: 100vh;
+    height: var(--app-height);
     display: flex;
     pointer-events: none;
 }
 
 .plane {
     width: 100vw;
-    height: 100vh;
+    height: var(--app-height);
     position: relative;
     z-index: 100;
 }
