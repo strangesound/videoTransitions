@@ -263,8 +263,8 @@ window.addEventListener("load", () => {
 
           // wait a tick and pause the rest of videos (the ones that are hidden)
           curtains.nextRender(() => {
-            // multiTexturesPlane.videos[1].pause();
-            // multiTexturesPlane.videos[2].pause();
+            multiTexturesPlane.videos[1].pause();
+            multiTexturesPlane.videos[2].pause();
           });
         },
         false
