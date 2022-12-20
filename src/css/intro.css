@@ -1,0 +1,17 @@
+@import './variable.css';
+
+.preloader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    position: absolute;
+    z-index: 9999;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background-color: var(--dark-color);
+
+}

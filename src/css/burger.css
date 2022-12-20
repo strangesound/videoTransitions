@@ -1,3 +1,6 @@
+@import './variable.css';
+
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -7,8 +10,8 @@
 
 .header__logo {
   font-size: 30px;
-
-
+  color: var(--dark-color);
+  z-index: 15000;
 }
 
 .header__button {
@@ -18,7 +21,51 @@
   background-color: #000615;
   box-shadow: none;
   border: 0;
-  transform: color .1s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1000;
+
+}
+
+.header__button::before {
+  display: block;
+  position: relative;
+  content: "";
+  height: 2px;
+  width: 25px;
+  background-color: #000615;
+  transform: translateY(-8px);
+  transition: transform 1s;
+
+
+}
+.header__button::after {
+  display: block;
+  position: relative;
+  content: "";
+  height: 2px;
+  width: 25px;
+  background-color: #000615;
+  transform: translateY(8px);
+
+  transition: transform 1s;
+
+}
+.menu-open.header__button::before {
+  transform: rotate(-45deg) translateX(-1px);
+  background-color: #fff;
+  transition: transform 1s;
+
+
+}
+.menu-open.header__button::after {
+  transform: rotate(45deg) translateX(-1px);
+  background-color: #fff;
+  transition: transform 1s;
+
 }
 
 
@@ -74,7 +121,7 @@
   display: inline-block;
   transform: translateY(0);
 
-  
+
 }
 
 .menu-link:hover {
@@ -104,8 +151,8 @@
   font-weight: 600;
   font-size: 45px;
   line-height: 1.475;
-  color: #000615 ;
-  }
+  color: #000615;
+}
 
 .menu-social-links {
   font-size: 13px;
@@ -115,21 +162,15 @@
 
 }
 
-.menu-social-links a:hover{
+.menu-social-links a:hover {
   text-decoration: underline;
 
 }
 
 
-
-button[id='burger'] {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-}
-
-
-.menu-open {
-  background-color: #000615;
+.menu-social{
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  margin-top: 45px;
 }

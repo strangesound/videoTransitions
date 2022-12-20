@@ -12,6 +12,8 @@ let currentTexture = 0;
 let transitionTimer = 0;
 let timer = 0;
 let isRunning = 0;
+let to;
+
 let head = document.querySelector('.frame__title') 
 console.log(head);
 // Calculate screen size
@@ -100,7 +102,7 @@ window.addEventListener("load", () => {
 
       navElements.forEach(nav => {
         nav.addEventListener('click', (event) => {
-          let to = event.target.getAttribute('data-nav');
+          to = event.target.getAttribute('data-nav');
           if (isRunning || to == currentTexture) return;
           var elems = document.querySelectorAll(".frame__switch-item");
           [].forEach.call(elems, function (el) {
@@ -133,6 +135,7 @@ window.addEventListener("load", () => {
               multiTexturesPlane.videos[
                 (currentTexture + length + 1) % length
               ].pause();
+
               isRunning = false;
             },
           });
@@ -161,13 +164,16 @@ window.addEventListener("load", () => {
 
 
       function changeTex(number) {
-        
-        isRunning = true
-        let to = (currentTexture + number) % 3
+        if (isRunning) return;
+
+        to = (currentTexture + number) % 3
         if (to === -1){
           to = 2
         }
-        console.log('myto', to, number);
+
+        isRunning = true
+
+        // console.log('myto', to, number);
         multiTexturesPlane.uniforms.to.value = to;
         let fake = { progress: 0 }
         gsap.to(fake, {
@@ -176,6 +182,7 @@ window.addEventListener("load", () => {
           ease: 'power2.in',
           onStart: () => {
             multiTexturesPlane.videos[to].play();
+            console.log('play texture number', to)
             currentTexture = to;
           },
           onUpdate: () => {
@@ -189,16 +196,36 @@ window.addEventListener("load", () => {
             multiTexturesPlane.videos[
               (currentTexture + length - 1) % length
             ].pause();
+            console.log('pause texture number', (currentTexture + length - 1) % length)
+
             multiTexturesPlane.videos[
               (currentTexture + length + 1) % length
             ].pause();
+            console.log('pause texture number', (currentTexture + length + 1) % length)
+
             isRunning = false;
-          },
+
+        },
         }
         
         
         );
         
+        let elems = [...document.querySelectorAll(".frame__switch-item")];
+        elems.forEach(el => {
+          console.log(el.getAttribute('data-nav') === to);
+          console.log('to', to);
+          if (el.getAttribute('data-nav') == to){
+            el.classList.add("frame__switch-item--current");
+          }
+          else {
+            el.classList.remove("frame__switch-item--current");
+          }
+        });
+
+
+
+
         changeHeader(to)
 
       }
@@ -223,9 +250,9 @@ window.addEventListener("load", () => {
         "click",
         () => {
           // fade out animation
-          gsap.to('#intro', { duration: 0.1, autoAlpha: 0. })
+          gsap.to('#intro', { duration: 0.1, autoAlpha: 0, display:"none"})
           document.body.classList.add("video-started");
-
+          document.querySelector('.frame__switch-item').classList.add('frame__switch-item--current')
           gsap.to(multiTexturesPlane.uniforms.fadeIn, {
             duration: 1,
             value: 1
@@ -236,8 +263,8 @@ window.addEventListener("load", () => {
 
           // wait a tick and pause the rest of videos (the ones that are hidden)
           curtains.nextRender(() => {
-            multiTexturesPlane.videos[1].pause();
-            multiTexturesPlane.videos[2].pause();
+            // multiTexturesPlane.videos[1].pause();
+            // multiTexturesPlane.videos[2].pause();
           });
         },
         false
