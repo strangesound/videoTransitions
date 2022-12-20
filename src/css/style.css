@@ -1,4 +1,5 @@
 @import './reset.css';
+@import './burger.css';
 
 @font-face {
     font-family: "Raleway";
@@ -110,7 +111,6 @@ a {
 
 a:hover,
 a:focus {
-    color: var(--color-link-hover);
     outline: none;
     text-decoration: underline;
     opacity: 1;
@@ -235,8 +235,8 @@ a:focus {
     padding: 0.85rem 1.25rem;
     border: 1px solid #fff;
     font-family: "Raleway", sans-serif;
-    font-weight: 400;
-    font-size: 1.85rem;
+    font-weight: 600;
+    font-size: 18px;
     /* margin: 0 1rem; */
     transition: opacity 0.3s;
     display: inline-block;
@@ -252,6 +252,8 @@ a:focus {
 .frame__switch-item--current {
     pointer-events: none;
     opacity: 1;
+    background-color: var(--light-color);
+    color: var(--dark-color);
 }
 
 .frame__content-text,
@@ -259,7 +261,8 @@ a:focus {
     opacity: 0;
     transition: opacity 0.3s;
     display: flex;
-    gap: 50px;
+    flex-wrap: wrap;
+    gap: 10px;
 
 }
 
@@ -358,29 +361,7 @@ a:focus {
     }
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    justify-self: flex-start;
-    align-items: center;
-}
 
-.header__logo {
-    font-size: 30px;
-
-
-}
-
-.header__button {
-    width: 60px;
-    height: 60px;
-    border-radius: 100%;
-    background-color: var(--blue-color);
-    box-shadow: none;
-    border: 0;
-
-    
-}
 
 .btn{
     display: flex;

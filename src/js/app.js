@@ -12,7 +12,9 @@ let currentTexture = 0;
 let transitionTimer = 0;
 let timer = 0;
 let isRunning = 0;
-
+let head = document.querySelector('.frame__title') 
+console.log(head);
+// Calculate screen size
 const appHeight = () => {
   const doc = document.documentElement
   doc.style.setProperty('--app-height', `${window.innerHeight}px`)
@@ -142,8 +144,8 @@ window.addEventListener("load", () => {
       Observer.create({
         type: "touch,pointer",
         wheelSpeed: -1,
-        onRight: () => changeTex(),
-        onLeft: () => changeTex(),
+        onRight: () => changeTex(-1),
+        onLeft: () => changeTex(+1),
         tolerance: 50,
         preventDefault: true
       });
@@ -151,17 +153,21 @@ window.addEventListener("load", () => {
       Observer.create({
         type: "wheel",
         wheelSpeed: -1,
-        onDown: () => changeTex(),
-        onUp: () => changeTex(),
+        onDown: () => changeTex(-1),
+        onUp: () => changeTex(+1),
         tolerance: 10,
         preventDefault: true
       });
 
 
-      function changeTex() {
+      function changeTex(number) {
+        
         isRunning = true
-        let to = (currentTexture + 1) % 2 
-        console.log('myto', to);
+        let to = (currentTexture + number) % 3
+        if (to === -1){
+          to = 2
+        }
+        console.log('myto', to, number);
         multiTexturesPlane.uniforms.to.value = to;
         let fake = { progress: 0 }
         gsap.to(fake, {
@@ -188,11 +194,28 @@ window.addEventListener("load", () => {
             ].pause();
             isRunning = false;
           },
-        });
-
+        }
+        
+        
+        );
+        
+        changeHeader(to)
 
       }
 
+      function changeHeader(num) {
+        console.log('change header', num);
+        if (num === 0){
+          head.innerHTML = 'Intelligent content management_'
+        }
+        else if (num === 1){
+          head.innerHTML = 'SEAMLESS COLUMN SYSTEM_'
+        }
+        else if (num === 2){
+          head.innerHTML = 'LIGHT RIBBON SYSTEM_'
+        }
+        
+      }
 
 
       // click to play the videos
