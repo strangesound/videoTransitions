@@ -14,14 +14,16 @@ let timer = 0;
 let isRunning = 0;
 let to;
 
-let head = document.querySelector('.frame__title') 
+let head = document.querySelector('.frame__title')
+
+
 // Calculate screen size
 const appHeight = () => {
   const doc = document.documentElement
   doc.style.setProperty('--app-height', `${window.innerHeight}px`)
- }
- window.addEventListener('resize', appHeight)
- appHeight()
+}
+window.addEventListener('resize', appHeight)
+appHeight()
 
 
 window.addEventListener("load", () => {
@@ -35,6 +37,8 @@ window.addEventListener("load", () => {
   // get our plane element
   const planeElements = [...document.getElementsByClassName("plane")];
   const navElements = [...document.getElementsByClassName("js-nav")];
+  const btnElements = [...document.getElementsByClassName("circles")];
+  console.log(btnElements);
   const duration = planeElements[0].getAttribute("data-duration") || 2;
   // set our initial parameters (basic uniforms)
   const params = {
@@ -142,6 +146,52 @@ window.addEventListener("load", () => {
         })
       })
 
+      //buttons change
+      btnElements.forEach(nav => {
+        nav.addEventListener('click', (event) => {
+          to = event.target.getAttribute('data-nav');
+          if (isRunning || to == currentTexture) return;
+          var elems = document.querySelectorAll(".circles");
+          [].forEach.call(elems, function (el) {
+            el.classList.remove("circle-current");
+          });
+          event.target.classList.add('circle-current')
+          isRunning = true
+
+          multiTexturesPlane.uniforms.to.value = to;
+          let fake = { progress: 0 }
+          gsap.to(fake, {
+            duration: duration,
+            progress: 1,
+            ease: 'power2.in',
+            onStart: () => {
+              multiTexturesPlane.videos[to].play();
+              currentTexture = to;
+            },
+            onUpdate: () => {
+              if (fake.progress === 1) {
+                multiTexturesPlane.uniforms.from.value = to;
+              }
+              multiTexturesPlane.uniforms.transitionTimer.value = fake.progress
+            },
+            onComplete: () => {
+              multiTexturesPlane.uniforms.from.value = to;
+              multiTexturesPlane.videos[
+                (currentTexture + length - 1) % length
+              ].pause();
+              multiTexturesPlane.videos[
+                (currentTexture + length + 1) % length
+              ].pause();
+
+              isRunning = false;
+            },
+          });
+
+        })
+      })
+
+
+
 
       Observer.create({
         type: "touch,pointer",
@@ -166,7 +216,7 @@ window.addEventListener("load", () => {
         if (isRunning) return;
 
         to = (currentTexture + number) % 3
-        if (to === -1){
+        if (to === -1) {
           to = 2
         }
 
@@ -203,15 +253,15 @@ window.addEventListener("load", () => {
 
             isRunning = false;
 
-        },
+          },
         }
-        
-        
+
+
         );
-        
+
         let elems = [...document.querySelectorAll(".frame__switch-item")];
         elems.forEach(el => {
-          if (el.getAttribute('data-nav') == to){
+          if (el.getAttribute('data-nav') == to) {
             el.classList.add("frame__switch-item--current");
           }
           else {
@@ -219,25 +269,22 @@ window.addEventListener("load", () => {
           }
         });
 
-
-
-
-        changeHeader(to)
+        changeHeader(to);
 
       }
 
       function changeHeader(num) {
         console.log('change header', num);
-        if (num === 0){
+        if (num === 0) {
           head.innerHTML = 'Intelligent content management_'
         }
-        else if (num === 1){
+        else if (num === 1) {
           head.innerHTML = 'SEAMLESS COLUMN SYSTEM_'
         }
-        else if (num === 2){
+        else if (num === 2) {
           head.innerHTML = 'LIGHT RIBBON SYSTEM_'
         }
-        
+
       }
 
 
@@ -246,7 +293,7 @@ window.addEventListener("load", () => {
         "click",
         () => {
           // fade out animation
-          gsap.to('#intro', { duration: 0.1, autoAlpha: 0, display:"none"})
+          gsap.to('#intro', { duration: 0.1, autoAlpha: 0, display: "none" })
           document.body.classList.add("video-started");
           document.querySelector('.frame__switch-item').classList.add('frame__switch-item--current')
           gsap.to(multiTexturesPlane.uniforms.fadeIn, {
@@ -256,7 +303,7 @@ window.addEventListener("load", () => {
 
           // play all videos to force uploading the first frame of each texture
           multiTexturesPlane.playVideos();
-
+console.log(multiTexturesPlane)
           // wait a tick and pause the rest of videos (the ones that are hidden)
           curtains.nextRender(() => {
             multiTexturesPlane.videos[1].pause();

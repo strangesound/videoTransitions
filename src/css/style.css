@@ -20,21 +20,6 @@
     box-sizing: border-box;
 }
 
-:root {
-    font-size: 15px;
-}
-
-
-
-* {
-    box-sizing: border-box;
-}
-
-
-
-
-
-
 
 body {
     margin: 0;
@@ -59,41 +44,7 @@ body {
 }
 
 
-/* Page Loader */
-.js .loading::before,
-.js .loading::after {
-    content: '';
-    position: fixed;
-    z-index: 1000;
-}
 
-.js .loading::before {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: var(--app-height);
-    background: var(--dark-color);
-}
-
-.js .loading::after {
-    top: 50%;
-    left: 50%;
-    width: 60px;
-    height: 60px;
-    margin: -30px 0 0 -30px;
-    border-radius: 50%;
-    opacity: 0.4;
-    background: var(--color-link);
-    animation: loaderAnim 0.7s linear infinite alternate forwards;
-
-}
-
-@keyframes loaderAnim {
-    to {
-        opacity: 1;
-        transform: scale3d(0.5, 0.5, 1);
-    }
-}
 
 a {
     text-decoration: none;
@@ -139,33 +90,12 @@ a:focus {
     display: inline;
 }
 
-.frame__links a:not(:last-child),
-.frame__demos a:not(:last-child) {
-    margin-right: 1rem;
-}
-
-.frame__demos {
-    margin: 1rem 0;
-}
-
-.frame__demos-text {
-    margin-right: 2rem;
-}
-
-.frame__demo--current,
-.frame__demo--current:hover {
-    color: var(--color-text);
-    opacity: 0.5;
-    text-decoration: underline;
-}
 
 .frame__button {
     background: none;
     border: 0;
     margin: 0;
     padding: 0;
-    -moz-appearance: none;
-    -webkit-appearance: none;
     fill: #fff;
     width: 60px;
     height: 60px;
@@ -294,65 +224,6 @@ a:focus {
     width: 100px;
     display: none;
 }
-
-@media screen and (min-width: 53em) {
-    .frame {
-        text-align: left;
-        display: grid;
-        padding: 3rem;
-        pointer-events: none;
-        grid-template-columns: 25% 50% 25%;
-        grid-template-areas: 'title links links'
-            '... play ...'
-            'content content content'
-            '... demos demos';
-    }
-
-    .frame__title {
-        margin: 0;
-        margin-top: auto;
-        grid-area: title;
-    }
-
-    .frame__button {
-        grid-area: play;
-        align-self: end;
-        justify-self: center;
-    }
-
-    .frame__content {
-        grid-area: content;
-        align-self: end;
-        justify-self: center;
-    }
-
-    .frame__tagline {
-        position: relative;
-        margin: 0 0 0 1rem;
-        padding: 0 0 0 1rem;
-        opacity: 0.5;
-    }
-
-    .frame__demos {
-        margin: 0;
-        grid-area: demos;
-        justify-self: end;
-        align-self: end;
-    }
-
-    .frame__links {
-        grid-area: links;
-        padding: 0;
-        justify-self: end;
-    }
-
-    .frame a,
-    .frame button {
-        pointer-events: auto;
-    }
-}
-
-
 
 
 
